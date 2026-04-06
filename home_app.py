@@ -314,32 +314,23 @@ def set_bg(name):
 def sidebar():
     st.sidebar.title("🏠 H.O.M.E.")
 
-    user = st.sidebar.text_input("Your Name", value=st.session_state.user, key="user")
+    st.sidebar.text_input("Your Name", key="user")
+
+    user = st.session_state.user
 
     if user:
-        st.session_state.user = user
-
-    if user:
-        room_options = list(rooms.keys())
-        selected_room = st.sidebar.selectbox("Navigate to Room", room_options, index=room_options.index(st.session_state.room) if st.session_state.room in room_options else 0)
-        if selected_room != st.session_state.room:
-            st.session_state.room = selected_room
-            st.experimental_rerun()
-
         if st.sidebar.button("🧠 View My Growth"):
             st.sidebar.write(get_user_profile(user))
 
         if st.sidebar.button("Export Word"):
-            output_file = export_word(user)
-            with open(output_file, "rb") as file_obj:
-                file_data = file_obj.read()
-            st.sidebar.download_button("Download Word", file_data, file_name=output_file)
+            f = export_word(user)
+            with open(f, "rb") as file:
+                st.sidebar.download_button("Download", file, f)
 
         if st.sidebar.button("Export PDF"):
-            output_file = export_pdf(user)
-            with open(output_file, "rb") as file_obj:
-                file_data = file_obj.read()
-            st.sidebar.download_button("Download PDF", file_data, file_name=output_file)
+            f = export_pdf(user)
+            with open(f, "rb") as file:
+                st.sidebar.download_button("Download", file, f)
 
 # ---------------- ROOMS ----------------
 def entry():
