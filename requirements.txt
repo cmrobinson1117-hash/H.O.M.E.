@@ -1,0 +1,6 @@
+streamlit
+openai
+snowflake-connector-python
+python-docx
+reportlab
+python-dotenv
